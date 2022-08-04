@@ -21,8 +21,50 @@ void yyerror(const char* s);
 
 DECLARACAO: {printf("Fim do programa\n");}
 	| VAR ID COL TYPE DVAR DECLARACAO {printf("Declarando variavel\n");}
-	| CONST DCONS DECLARACAO {printf("Declarando consatnte\n");}
-	| FN DFN DECLARACAO {printf("Declarando função\n");}
+	| CONST DCONS DECLARACAO {printf("Declarando constante\n");}
+	| IFELSE DECLARACAO
+	| ATRIBUICAO DECLARACAO
+	| SCOL {printf("Fim do programa2323\n");}
+	| FUNCAOZEIRA DECLARACAO
+	| WHILEZEIRA DECLARACAO
+;
+
+AQUIDENTRO: {}
+	| ATRIBUICAO AQUIDENTRO {} 
+	| DECLARAVARIAVEL AQUIDENTRO {}
+	| IFELSE AQUIDENTRO {}
+	| FUNCAOZEIRA AQUIDENTRO{}
+;
+
+DECLARAVARIAVEL:
+	VAR ID COL TYPE DVAR {printf("Declarando variavel\n");}
+	| CONST DCONS {printf("Declarando constante\n");}
+	
+
+
+ATRIBUICAO:  ID ATRIB EXP SCOL {printf("atribuicao\n");}
+;
+
+IFELSE: 
+	IF OPAR CONDZILLA CPAR OBRAC AQUIDENTRO CBRAC ELSEOPCIONAL SCOL {printf("IF(ID = LITERALINT);\n");}
+;
+
+ELSEOPCIONAL: {}
+	| ELSE OBRAC AQUIDENTRO CBRAC {printf("ELSA LET IT GO\n");}
+;
+
+FUNCAOZEIRA:
+	FN ID OPAR ID COL TYPE CPAR COL TYPE OBRAC AQUIDENTRO CBRAC SCOL {printf("EU SOU UMA FUNCAO\n");}
+;
+
+WHILEZEIRA:
+	WHILE OPAR CONDZILLA CPAR OBRAC AQUIDENTRO CBRAC SCOL {printf("EU SOU MUUIIITTOOO WHILE\n");}
+
+
+
+TYPE: BOOL {printf("Tipo booleano\n");}
+	| INT {printf("Tipo inteiro\n");}
+	| FLOAT {printf("Tipo float\n");}
 ;
 
 DVAR:  SCOL {printf("Declarando varaivel sem iniciar valor\n");}
@@ -36,47 +78,22 @@ DVAR2: LITERALINT SCOL {printf("Declarando variavel com inteiro\n");}
 DCONS: ID COL TYPE ATRIB DCONS2 {printf("Declarando constante...\n");}
 ;
 
-DCONS2: LITERALINT SCOL {printf("Declarando constante com inteiro\n");}
-	|	LITERALFLOAT SCOL {printf("Declarando constante com float\n");}
+DCONS2: LITERALINT SCOL { printf("Declarando constante com inteiro\n"); }
+	|	LITERALFLOAT SCOL { printf("Declarando constante com float\n"); }
 ;
 
-DFN: ID OPAR PARMS CPAR COL TYPE OBRAC DCS CMDS CBRAC SCOL {printf("Declarando função\n");}
+EXP: {}
+	| LITERALINT EXP
+	| LITERALFLOAT EXP
+	| ID EXP
+	| PLUS EXP {printf("Soma BOLADONA\n");}
+	| TIMES EXP {printf("Multiplicação\n");}
 ;
 
-PARMS: ID COL TYPE PARMS2 {printf("Parametros novo\n");}
-;
 
-PARMS2: SCOL PARMS {printf("Parametros intermidiarios\n");}
-	|	{printf("Ultimo parametro\n");}
-;
+CONDZILLA: {}
+	| EXP EQUAL EXP {printf("CONDICIONAL LEGAL");}
 
-TYPE: BOOL {printf("Tipo booleano\n");}
-	| INT {printf("Tipo inteiro\n");}
-	| FLOAT {printf("Tipo float\n");}
-;
-
-DCS: {printf("Fim declarações\n");}
-	| VAR ID COL TYPE DVAR DCS {printf("Declarando variavel\n");}
-	| CONST DCONS DCS {printf("Declarando constante\n");}
-;
-
-CMDS: {printf("Fim comandos\n");}
-	| ID ATRIB EXP SCOL CMDS {printf("Comando atribuição\n");}
-	| IF OPAR COND CPAR OBRAC CMDS CBRAC ELSE OBRAC CMDS CBRAC SCOL CMDS {printf("If-else\n");}
-	| IF OPAR COND CPAR OBRAC CMDS CBRAC SCOL CMDS {printf("If\n");}
-	| WHILE OPAR COND CPAR OBRAC CMDS CBRAC SCOL CMDS {printf("While\n");}
-	| RETURN EXP SCOL CMDS {printf("Um retorno\n");}
-;
-
-EXP: ID PLUS EXP {printf("Soma\n");}
-	| ID TIMES EXP {printf("Multiplicação\n");}
-	| ID EQUAL EXP {printf("Comparação\n");}
-	| ID SCOL {printf("Ultimo termo\n");}
-;
-
-COND: ID EQUAL COND {printf("Condicional\n");}
-	| ID {printf("Ultimo termo da condição\n");}
-;
 
 %%
 
