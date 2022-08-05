@@ -33,7 +33,8 @@ void yyerror(const char* s);
 
 %%
 
-ESCOPOGLOBAL: {printf("Fim do programa\n");}
+ESCOPOGLOBAL: 
+	{printf("Fim do programa\n");}
 	| CONDICIONAL ESCOPOGLOBAL
 	| DECLARACAO ESCOPOGLOBAL
 	| FUNCAO ESCOPOGLOBAL
