@@ -36,10 +36,8 @@ void yyerror(const char* s);
 
 ESCOPOGLOBAL: 
 	{printf("Fim do programa\n");}
-	| CONDICIONAL ESCOPOGLOBAL
 	| DECLARACAO ESCOPOGLOBAL
 	| FUNCAO ESCOPOGLOBAL
-	| LOOP ESCOPOGLOBAL
 ;
 
 ESCOPOLOCAL: 
@@ -47,13 +45,17 @@ ESCOPOLOCAL:
 	| ATRIBUICAO ESCOPOLOCAL { printf("(Bloco entre chaves, regra de derivacao: ESCOPOLOCAL -> ATRIBUICAO ESCOPOLOCAL , codigo gerador: ATRIBUICAO ESCOPOLOCAL, codigo gerador: ATRIBUICAO ESCOPOLOCAL)\n"); } 
 	| DECLARACAO ESCOPOLOCAL {printf("(Bloco entre chaves, regra de derivacao: ESCOPOLOCAL ->  DECLARACAO ESCOPOLOCAL, codigo gerador: DECLARACAO ESCOPOLOCAL)\n");}
 	| CONDICIONAL ESCOPOLOCAL {printf("(Bloco entre chaves, regra de derivacao: ESCOPOLOCAL -> CONDICIONAL ESCOPOLOCAL , codigo gerador: CONDICIONAL ESCOPOLOCAL)\n");}
-	| FUNCAO ESCOPOLOCAL{printf("(Bloco entre chaves, regra de derivacao: ESCOPOLOCAL -> FUNCAO ESCOPOLOCAL , codigo gerador: FUNCAO ESCOPOLOCAL)\n");}
+	| LOOP ESCOPOLOCAL {printf("(Bloco entre chaves, regra de derivacao: ESCOPOLOCAL -> LOOP ESCOPOLOCAL , codigo gerador: LOOP ESCOPOLOCAL)\n");}
+	| RETORNO ESCOPOLOCAL {printf("(Bloco entre chaves, regra de derivacao: ESCOPOLOCAL -> RETORNO ESCOPOLOCAL , codigo gerador: RETORNO ESCOPOLOCAL)\n");}
 ;
 
 DECLARACAO:
 	VAR ID COL TYPE INICIALIZACAOOPCIONAL {printf("(Declaração de variável, regra de derivacao: DECLARACAO -> VAR ID COL TYPE INICIALIZACAOOPCIONAL , codigo gerador: VAR ID: TYPE INICIALIZACAOOPCIONAL;)\n");}
 	| CONST ID COL TYPE ATRIB EXPRESSAO SCOL {printf("(Declaração de constante, regra de derivacao: DECLARACAO -> CONST ID COL TYPE ATRIB EXPRESSAO SCOL, codigo gerador: CONST ID: TYPE = EXPRESSAO);\n");}
 	
+RETORNO:
+	RETURN EXPRESSAO SCOL {printf("(Retorno, regra de derivação: RETORNO -> RETURN EXPRESSAO SCOL , codigo: RETURN EXPRESSAO;)\n");}
+	;
 ATRIBUICAO:  
 	ID ATRIB EXPRESSAO SCOL {printf("(Atribuição, regra de derivacao: ATRIBUICAO -> ID ATRIB EXPRESSAO SCOL , codigo gerador: ID = EXPRESSAO)\n");}
 ;
@@ -120,3 +122,4 @@ void yyerror(const char* s)
 	fprintf(stderr, "Parse error: %s\n", s);
 	exit(1);
 }
+
