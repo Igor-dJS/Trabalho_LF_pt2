@@ -10,7 +10,8 @@ Authors:
 Code: Syntatic analyser for LF language as assignment for "Linguagens Formais" course at IC - UFRJ
 Last update: August 2022
 
-Usage instructions: ./analisadorLexJIV <input .txt file> <output .txt file> 
+Compilation instructions: make
+Usage instructions: ./ling_lf <input .txt file> 
 */
 
 #include <stdio.h>
